@@ -2,10 +2,13 @@ package com.mobidevices.mobidevices;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+//import android.widget.LinearLayout;
+import android.widget.ListView;
+//import android.widget.TextView;
 
 import java.net.URL;
+import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -22,15 +25,18 @@ public class MainActivity extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
 
-        /** Create a new layout to display the view */
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(1);
+        //System.out.println("dd");
 
-        /** Create a new textview array to display the results */
-        TextView title[];
+        ListView listViewPosts = (ListView)findViewById(R.id.listViewPosts);
 
-        System.out.println("dd");
+        final ArrayList<String> posts = new ArrayList<String>();
+        final ArrayAdapter<String> adapter;
+        adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, posts);
+
+        listViewPosts.setAdapter(adapter);
 
         try {
             URL url = new URL("http://mobidevices.ru/feed");
@@ -41,29 +47,25 @@ public class MainActivity extends Activity
 
             NodeList nodeList = doc.getElementsByTagName("item");
 
-            /** Assign textview array lenght by arraylist size */
-            title = new TextView[nodeList.getLength()];
-
             for (int i = 0; i < nodeList.getLength(); i++) {
 
                 Node node = nodeList.item(i);
-
-                title[i] = new TextView(this);
 
                 Element fstElmnt = (Element) node;
                 NodeList nameList = fstElmnt.getElementsByTagName("title");
                 Element nameElement = (Element) nameList.item(0);
                 nameList = nameElement.getChildNodes();
-                title[i].setText("title = "
-                    + ((Node) nameList.item(0)).getNodeValue());
 
-                layout.addView(title[i]);
+                posts.add(0, ((Node)nameList.item(0)).getNodeValue());
+
+                System.out.println("title = "
+                    + ((Node) nameList.item(0)).getNodeValue());
             }
         } catch (Exception e) {
             System.out.println("XML Pasing Excpetion = " + e);
         }
 
-        setContentView(layout);
+        //setContentView(layout);
         //setContentView(R.layout.main);
     }
 }
