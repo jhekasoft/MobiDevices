@@ -18,6 +18,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import com.mobidevices.mobidevices.PostListViewAdapter;
+import com.mobidevices.mobidevices.PostRowItem;
+import java.util.List;
+
 public class MainActivity extends Activity
 {
     /** Called when the activity is first created. */
@@ -30,11 +34,13 @@ public class MainActivity extends Activity
         //System.out.println("dd");
 
         ListView listViewPosts = (ListView)findViewById(R.id.listViewPosts);
+        List<PostRowItem> postRowItems;
+        postRowItems = new ArrayList<PostRowItem>();
 
-        final ArrayList<String> posts = new ArrayList<String>();
-        final ArrayAdapter<String> adapter;
-        adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, posts);
+//        final ArrayList<String> posts = new ArrayList<String>();
+//        final ArrayAdapter<String> adapter;
+        PostListViewAdapter adapter = new PostListViewAdapter(this,
+                R.layout.post_list_item, postRowItems);
 
         listViewPosts.setAdapter(adapter);
 
@@ -56,7 +62,10 @@ public class MainActivity extends Activity
                 Element titleElement = (Element) titleList.item(0);
                 titleList = titleElement.getChildNodes();
 
-                posts.add(((Node)titleList.item(0)).getNodeValue());
+                PostRowItem item = new PostRowItem(0, ((Node)titleList.item(0)).getNodeValue(), "dd");
+                postRowItems.add(item);
+
+                //posts.add(((Node)titleList.item(0)).getNodeValue());
 
 //                System.out.println("title = "
 //                    + ((Node) nameList.item(0)).getNodeValue());
