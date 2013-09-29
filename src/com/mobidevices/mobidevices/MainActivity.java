@@ -58,11 +58,16 @@ public class MainActivity extends Activity
                 Node node = nodeList.item(i);
 
                 Element fstElmnt = (Element) node;
+
                 NodeList titleList = fstElmnt.getElementsByTagName("title");
                 Element titleElement = (Element) titleList.item(0);
                 titleList = titleElement.getChildNodes();
 
-                PostRowItem item = new PostRowItem(0, ((Node)titleList.item(0)).getNodeValue(), "dd");
+                NodeList descList = fstElmnt.getElementsByTagName("description");
+                Element descElement = (Element) descList.item(0);
+                descList = descElement.getChildNodes();
+
+                PostRowItem item = new PostRowItem(0, ((Node)titleList.item(0)).getNodeValue(), ((Node)descList.item(0)).getNodeValue());
                 postRowItems.add(item);
 
                 //posts.add(((Node)titleList.item(0)).getNodeValue());
