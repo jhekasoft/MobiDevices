@@ -52,14 +52,14 @@ public class MainActivity extends Activity
                 Node node = nodeList.item(i);
 
                 Element fstElmnt = (Element) node;
-                NodeList nameList = fstElmnt.getElementsByTagName("title");
-                Element nameElement = (Element) nameList.item(0);
-                nameList = nameElement.getChildNodes();
+                NodeList titleList = fstElmnt.getElementsByTagName("title");
+                Element titleElement = (Element) titleList.item(0);
+                titleList = titleElement.getChildNodes();
 
-                posts.add(0, ((Node)nameList.item(0)).getNodeValue());
+                posts.add(((Node)titleList.item(0)).getNodeValue());
 
-                System.out.println("title = "
-                    + ((Node) nameList.item(0)).getNodeValue());
+//                System.out.println("title = "
+//                    + ((Node) nameList.item(0)).getNodeValue());
             }
         } catch (Exception e) {
             System.out.println("XML Pasing Excpetion = " + e);
